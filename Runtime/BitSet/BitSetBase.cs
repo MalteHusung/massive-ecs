@@ -22,6 +22,26 @@ namespace Massive
 			EnsureBlocksCapacity(other.BlocksCapacity);
 		}
 
+		/// <summary>
+		/// Makes the bits of the specified set equal to the bits of this one, including the blocks only the other set has.
+		/// </summary>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		protected void CopyBitsTo(BitSetBase other)
+		{
+			other.GrowToFit(this);
+
+			Array.Copy(NonEmptyBlocks, other.NonEmptyBlocks, BlocksCapacity);
+			Array.Copy(SaturatedBlocks, other.SaturatedBlocks, BlocksCapacity);
+			Array.Copy(Bits, other.Bits, Bits.Length);
+
+			if (BlocksCapacity < other.BlocksCapacity)
+			{
+				Array.Fill(other.NonEmptyBlocks, 0UL, BlocksCapacity, other.BlocksCapacity - BlocksCapacity);
+				Array.Fill(other.SaturatedBlocks, 0UL, BlocksCapacity, other.BlocksCapacity - BlocksCapacity);
+				Array.Fill(other.Bits, 0UL, Bits.Length, other.Bits.Length - Bits.Length);
+			}
+		}
+
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public void EnsureBlocksCapacity(int blocksCapacity)
 		{

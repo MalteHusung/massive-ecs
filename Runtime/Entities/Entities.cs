@@ -364,11 +364,7 @@ namespace Massive
 		/// </summary>
 		public void CopyTo(Entities other)
 		{
-			other.GrowToFit(this);
-
-			Array.Copy(NonEmptyBlocks, other.NonEmptyBlocks, BlocksCapacity);
-			Array.Copy(SaturatedBlocks, other.SaturatedBlocks, BlocksCapacity);
-			Array.Copy(Bits, other.Bits, Bits.Length);
+			CopyBitsTo(other);
 
 			other.EnsureEntityAt(UsedIds - 1);
 			other.EnsurePoolAt(PooledIds - 1);

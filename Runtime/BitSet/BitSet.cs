@@ -295,11 +295,7 @@ namespace Massive
 				other.Sets.EnsureBinded(other);
 			}
 
-			other.GrowToFit(this);
-
-			Array.Copy(NonEmptyBlocks, other.NonEmptyBlocks, BlocksCapacity);
-			Array.Copy(SaturatedBlocks, other.SaturatedBlocks, BlocksCapacity);
-			Array.Copy(Bits, other.Bits, Bits.Length);
+			CopyBitsTo(other);
 		}
 	}
 }

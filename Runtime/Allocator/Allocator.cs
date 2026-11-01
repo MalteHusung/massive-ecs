@@ -394,6 +394,7 @@ namespace Massive
 			for (var i = PageCount; i < other.PageCount; i++)
 			{
 				UnsafeUtils.FreeAligned(other.Pages[i].AlignedPtr);
+				other.Pages[i] = default;
 			}
 
 			Array.Copy(FreeToAlloc, other.FreeToAlloc, AllClassCount);
